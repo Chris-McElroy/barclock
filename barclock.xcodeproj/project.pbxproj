@@ -11,6 +11,7 @@
 		1E02283928359EFA00C38900 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E02283828359EFA00C38900 /* ContentView.swift */; };
 		1E02283B28359EFB00C38900 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E02283A28359EFB00C38900 /* Assets.xcassets */; };
 		1E02283E28359EFB00C38900 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E02283D28359EFB00C38900 /* Preview Assets.xcassets */; };
+		1EEB97E22835C6CA00A289B4 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EEB97E12835C6CA00A289B4 /* Settings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,8 @@
 		1E02283A28359EFB00C38900 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1E02283D28359EFB00C38900 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		1E02283F28359EFB00C38900 /* barclock.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = barclock.entitlements; sourceTree = "<group>"; };
+		1E0228452835AA6800C38900 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1EEB97E12835C6CA00A289B4 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,8 +55,10 @@
 		1E02283528359EFA00C38900 /* barclock */ = {
 			isa = PBXGroup;
 			children = (
+				1E0228452835AA6800C38900 /* Info.plist */,
 				1E02283628359EFA00C38900 /* barclockApp.swift */,
 				1E02283828359EFA00C38900 /* ContentView.swift */,
+				1EEB97E12835C6CA00A289B4 /* Settings.swift */,
 				1E02283A28359EFB00C38900 /* Assets.xcassets */,
 				1E02283F28359EFB00C38900 /* barclock.entitlements */,
 				1E02283C28359EFB00C38900 /* Preview Content */,
@@ -139,6 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EEB97E22835C6CA00A289B4 /* Settings.swift in Sources */,
 				1E02283928359EFA00C38900 /* ContentView.swift in Sources */,
 				1E02283728359EFA00C38900 /* barclockApp.swift in Sources */,
 			);
@@ -274,6 +280,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = barclock/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -301,6 +308,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = barclock/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
