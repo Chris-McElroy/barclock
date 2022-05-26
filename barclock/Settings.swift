@@ -10,6 +10,6 @@ import Foundation
 class Settings: ObservableObject {
 	static let main = Settings()
 	
-	@Published var dayMode = false
+	@Published var dayMode = true
 	@Published var minuteHand = false
 }
