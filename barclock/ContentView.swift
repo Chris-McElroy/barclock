@@ -14,6 +14,7 @@ struct ContentView: View {
 	@State var timer: Bool = false
 	@State var timerOffset = 0
 	@State var update: Bool = false
+	@State var tapped: Bool = false
 	@ObservedObject var settings = Settings.main
 	
     var body: some View {
@@ -24,22 +25,26 @@ struct ContentView: View {
 					Circle()
 						.foregroundColor(getColor(time: timerOffset - time, mod: 8, div: 180))
 						.onTapGesture {
+							if waitForTap() { return }
 							timerOffset += 180
 						}
 					Circle()
 						.foregroundColor(getColor(time: timerOffset - time, mod: 6, div: 30))
 						.onTapGesture {
+							if waitForTap() { return }
 							timerOffset += 30
 						}
 					Circle()
 						.foregroundColor(getColor(time: timerOffset - time, mod: 6, div: 5))
 						.onTapGesture {
+							if waitForTap() { return }
 							timerOffset += 5
 						}
 					Circle()
 						.foregroundColor(getColor(time: timerOffset - time, mod: 5, div: 1))
 						.frame(width: settings.minuteHand ? nil : 0)
 						.onTapGesture {
+							if waitForTap() { return }
 							timerOffset += 1
 						}
 					Spacer()
@@ -53,12 +58,14 @@ struct ContentView: View {
 				Circle()
 					.foregroundColor(getColor(time: time, mod: settings.dayMode ? 8 : 4, div: 180))
 					.onTapGesture {
+						if waitForTap() { return }
 						settings.dayMode.toggle()
 						StatusBarController.main.dayModeItem.state = settings.dayMode ? .on : .off
 					}
 				Circle()
 					.foregroundColor(getColor(time: time, mod: 6, div: 30))
 					.onTapGesture {
+						if waitForTap() { return }
 						if timer {
 							timer = false
 							lastTime = timerOffset - time
@@ -70,6 +77,7 @@ struct ContentView: View {
 				Circle()
 					.foregroundColor(getColor(time: time, mod: 6, div: 5))
 					.onTapGesture {
+						if waitForTap() { return }
 						Settings.main.minuteHand.toggle()
 						StatusBarController.main.minuteHandItem.state = Settings.main.minuteHand ? .on : .off
 					}
@@ -79,6 +87,7 @@ struct ContentView: View {
 				
 				Spacer()
 			}
+			.frame(minHeight: 3)
 		}
 		.onAppear {
 			getTime()
@@ -105,6 +114,20 @@ struct ContentView: View {
 		let hours = Calendar.current.component(.hour, from: Date())
 		let minutes = Calendar.current.component(.minute, from: Date())
 		time = minutes + 60*hours
+	}
+	
+	func waitForTap() -> Bool {
+		// prevents weird double tap glitch i was getting
+		
+		if tapped { print("stopped"); return true }
+		
+		tapped = true
+		
+		Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false, block: { _ in
+			tapped = false
+		})
+		
+		return false
 	}
 }
 

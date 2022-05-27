@@ -39,7 +39,6 @@ class StatusBarController {
 			statusBarButton.image = NSImage(systemSymbolName: "circle.grid.2x1.fill", accessibilityDescription: "barclock")
 //			statusBarButton.image?.size = NSSize(width: 18.0, height: 18.0)
 			statusBarButton.image?.isTemplate = true
-			
 		}
 		
 		// Add a menu and a menu item
