@@ -16,7 +16,6 @@ struct barclockApp: App {
         WindowGroup {
             ContentView()
 		}
-		
     }
 }
 
@@ -83,6 +82,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 			window.isReleasedWhenClosed = false
 			window.isMovableByWindowBackground = true
 			window.collectionBehavior = .canJoinAllSpaces
+			window.titlebarSeparatorStyle = .none
 		}
 		
 		//Initialising the status bar
