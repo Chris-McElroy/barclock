@@ -12,7 +12,7 @@ struct ContentView: View {
 	@State var time: Int = 0
 	@State var lastTime: Int = 0
 	@State var timer: Bool = false
-	@State var timerOffset = 86400 // this fails for crazy long timers but alternate solutions suck
+	@State var timerOffset = 0
 	@State var update: Bool = false
 	@State var tapped: Bool = false
 	@ObservedObject var settings = Settings.main
@@ -32,20 +32,32 @@ struct ContentView: View {
 						.foregroundColor(getColor(time: timerOffset - time, mod: 6, div: 30))
 						.onTapGesture {
 							if waitForTap() { return }
-							timerOffset += ((timerOffset + 30) % 180) + timerOffset/180
+							if (timerOffset - time)/30 % 6 == 5 {
+								timerOffset -= 150
+							} else {
+								timerOffset += 30
+							}
 						}
 					Circle()
 						.foregroundColor(getColor(time: timerOffset - time, mod: 6, div: 5))
 						.onTapGesture {
 							if waitForTap() { return }
-							timerOffset += ((timerOffset + 5) % 30) + timerOffset/30
+							if (timerOffset - time)/5 % 6 == 5 {
+								timerOffset -= 25
+							} else {
+								timerOffset += 5
+							}
 						}
 					Circle()
 						.foregroundColor(getColor(time: timerOffset - time, mod: 5, div: 1))
 						.frame(width: settings.minuteHand ? nil : 0)
 						.onTapGesture {
 							if waitForTap() { return }
-							timerOffset = ((timerOffset + 1) % 5) + timerOffset/5
+							if (timerOffset - time) % 5 == 4 {
+								timerOffset -= 4
+							} else {
+								timerOffset += 1
+							}
 						}
 					Spacer()
 				}
@@ -70,7 +82,8 @@ struct ContentView: View {
 							timer = false
 							lastTime = timerOffset - time
 						} else {
-							timerOffset = time + lastTime
+							// this fails for crazy long timers but alternate solutions suck
+							timerOffset = time + lastTime + 86400
 							timer = true
 						}
 					}
