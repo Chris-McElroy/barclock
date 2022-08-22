@@ -23,41 +23,45 @@ struct ContentView: View {
 				HStack {
 					Spacer()
 					Circle()
-						.foregroundColor(getColor(time: timerOffset - time, mod: 8, div: 180))
+						.foregroundColor(getColor(time: time - timerOffset, mod: 8, div: 180))
 						.onTapGesture {
 							if waitForTap() { return }
-							timerOffset += 180
+							if (time - timerOffset)/180 % 8 == 1 {
+								timerOffset = time - 86400
+							} else {
+								timerOffset += 180
+							}
 						}
 					Circle()
-						.foregroundColor(getColor(time: timerOffset - time, mod: 6, div: 30))
+						.foregroundColor(getColor(time: time - timerOffset, mod: 6, div: 30))
 						.onTapGesture {
 							if waitForTap() { return }
-							if (timerOffset - time)/30 % 6 == 5 {
-								timerOffset -= 150
-							} else {
+//							if (time - timerOffset)/30 % 6 == 0 {
+//								timerOffset -= 150
+//							} else {
 								timerOffset += 30
-							}
+//							}
 						}
 					Circle()
-						.foregroundColor(getColor(time: timerOffset - time, mod: 6, div: 5))
+						.foregroundColor(getColor(time: time - timerOffset, mod: 6, div: 5))
 						.onTapGesture {
 							if waitForTap() { return }
-							if (timerOffset - time)/5 % 6 == 5 {
-								timerOffset -= 25
-							} else {
+//							if (time - timerOffset)/5 % 6 == 0 {
+//								timerOffset -= 25
+//							} else {
 								timerOffset += 5
-							}
+//							}
 						}
 					Circle()
-						.foregroundColor(getColor(time: timerOffset - time, mod: 5, div: 1))
+						.foregroundColor(getColor(time: time - timerOffset, mod: 5, div: 1))
 						.frame(width: settings.minuteHand ? nil : 0)
 						.onTapGesture {
 							if waitForTap() { return }
-							if (timerOffset - time) % 5 == 4 {
-								timerOffset -= 4
-							} else {
+//							if (time - timerOffset) % 5 == 0 {
+//								timerOffset -= 4
+//							} else {
 								timerOffset += 1
-							}
+//							}
 						}
 					Spacer()
 				}
@@ -83,7 +87,7 @@ struct ContentView: View {
 							lastTime = timerOffset - time
 						} else {
 							// this fails for crazy long timers but alternate solutions suck
-							timerOffset = time + lastTime + 86400
+							timerOffset = time + lastTime - 86400
 							timer = true
 						}
 					}
