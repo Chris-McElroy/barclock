@@ -135,8 +135,8 @@ struct ContentView: View {
 	}
 	
 	func getTime() {
-		let hours = Calendar.current.component(.minute, from: Date())
-		let minutes = Calendar.current.component(.second, from: Date())
+		let hours = Calendar.current.component(.hour, from: Date())
+		let minutes = Calendar.current.component(.minute, from: Date())
 		settings.time = minutes + 60*hours
 	}
 	
