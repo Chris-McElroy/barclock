@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import HotKey
 
 @main
 struct barclockApp: App {
@@ -28,6 +29,8 @@ class StatusBarController {
 	private var statusItem: NSStatusItem
 	var minuteHandItem: NSMenuItem
 	var dayModeItem: NSMenuItem
+	var timerItem: NSMenuItem
+	let hotKey = HotKey(key: .t, modifiers: [.command, .option])
 	
 	init() {
 		statusBar = NSStatusBar.init()
@@ -47,12 +50,20 @@ class StatusBarController {
 		menu.addItem(minuteHandItem)
 		dayModeItem = NSMenuItem(title: "24 hour mode", action: #selector(toggleDayMode), keyEquivalent: "")
 		dayModeItem.state = Settings.main.dayMode ? .on : .off
-		
 		menu.addItem(dayModeItem)
+		timerItem = NSMenuItem(title: "timer", action: #selector(toggleTimer), keyEquivalent: "")
+		timerItem.state = Settings.main.timer ? .on : .off
+		menu.addItem(timerItem)
 		menu.addItem(NSMenuItem(title: "quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: ""))
 		statusItem.menu = menu
 		minuteHandItem.target = self // otherwise they're greyed out
 		dayModeItem.target = self
+		timerItem.target = self
+		
+		
+		hotKey.keyDownHandler = {
+			self.toggleTimer()
+		}
 	}
 	
 	@objc func toggleMinuteHand() {
@@ -64,6 +75,19 @@ class StatusBarController {
 		Settings.main.dayMode.toggle()
 		dayModeItem.state = Settings.main.dayMode ? .on : .off
 	}
+	
+	@objc func toggleTimer() {
+		if Settings.main.timer {
+			Settings.main.timer = false
+			Settings.main.lastTime = Settings.main.timerOffset - Settings.main.time
+		} else {
+			// this fails for crazy long timers but alternate solutions suck
+			Settings.main.timerOffset = Settings.main.time + Settings.main.lastTime - 86400
+			Settings.main.timer = true
+		}
+		timerItem.state = Settings.main.timer ? .on : .off
+	}
+	
 }
 
 class AppDelegate: NSObject, NSApplicationDelegate {
