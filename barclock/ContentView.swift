@@ -19,7 +19,8 @@ struct ContentView: View {
 				HStack {
 					Spacer()
 					Circle()
-						.foregroundColor(getColor(time: settings.time - settings.timerOffset, mod: 8, div: 180))
+						.foregroundColor(getColor(time: settings.time - settings.timerOffset + 3, mod: 8, div: 180))
+						.border(.clear)
 						.onTapGesture {
 							if waitForTap() { return }
 							if (settings.time - settings.timerOffset)/180 % 8 == 0 && (settings.timerOffset - settings.time) % 180 != 0 {
@@ -29,7 +30,8 @@ struct ContentView: View {
 							}
 						}
 					Circle()
-						.foregroundColor(getColor(time: settings.time - settings.timerOffset, mod: 6, div: 30))
+						.foregroundColor(getColor(time: settings.time - settings.timerOffset + 3, mod: 6, div: 30))
+						.border(.clear)
 						.onTapGesture {
 							if waitForTap() { return }
 //							if (time - timerOffset)/30 % 6 == 0 {
@@ -39,7 +41,8 @@ struct ContentView: View {
 //							}
 						}
 					Circle()
-						.foregroundColor(getColor(time: settings.time - settings.timerOffset, mod: 5, div: 6))
+						.foregroundColor(getColor(time: settings.time - settings.timerOffset + 3, mod: 5, div: 6))
+						.border(.clear)
 						.onTapGesture {
 							if waitForTap() { return }
 //							if (time - timerOffset)/5 % 6 == 0 {
@@ -49,7 +52,8 @@ struct ContentView: View {
 //							}
 						}
 					Circle()
-						.foregroundColor(getColor(time: settings.time - settings.timerOffset, mod: 6, div: 1))
+						.foregroundColor(getColor(time: settings.time - settings.timerOffset + 3, mod: 6, div: 1))
+						.border(.clear)
 						.frame(width: settings.minuteHand ? nil : 0)
 						.onTapGesture {
 							if waitForTap() { return }
@@ -62,19 +66,7 @@ struct ContentView: View {
 					Spacer()
 				}
 			} else {
-				HStack {
-					Spacer()
-					Circle()
-						.foregroundColor(.clear)
-					Circle()
-						.foregroundColor(.clear)
-					Circle()
-						.foregroundColor(.clear)
-					Circle()
-						.foregroundColor(.clear)
-						.frame(width: settings.minuteHand ? nil : 0)
-					Spacer()
-				}
+				Circle().fill(.clear)
 			}
 			Spacer().frame(height: 5)
 			HStack {
@@ -100,14 +92,14 @@ struct ContentView: View {
 						}
 					}
 				Circle()
-					.foregroundColor(getColor(time: settings.time, mod: 5, div: 6))
+					.foregroundColor(getColor(time: settings.time, mod: 6, div: 5))
 					.onTapGesture {
 						if waitForTap() { return }
 						Settings.main.minuteHand.toggle()
 						StatusBarController.main.minuteHandItem.state = Settings.main.minuteHand ? .on : .off
 					}
 				Circle()
-					.foregroundColor(getColor(time: settings.time, mod: 6, div: 1))
+					.foregroundColor(getColor(time: settings.time, mod: 5, div: 1))
 					.frame(width: settings.minuteHand ? nil : 0)
 				Spacer()
 			}
