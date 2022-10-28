@@ -16,7 +16,8 @@ struct barclockApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-		}
+				.edgesIgnoringSafeArea(.all)
+		}//.windowStyle(.hiddenTitleBar)
     }
 }
 
@@ -27,6 +28,7 @@ class StatusBarController {
 	static var main: StatusBarController = StatusBarController()
 	private var statusBar: NSStatusBar
 	private var statusItem: NSStatusItem
+	var clickThroughItem: NSMenuItem
 	var minuteHandItem: NSMenuItem
 	var dayModeItem: NSMenuItem
 	var timerItem: NSMenuItem
@@ -45,6 +47,9 @@ class StatusBarController {
 		
 		// Add a menu and a menu item
 		let menu = NSMenu()
+		clickThroughItem = NSMenuItem(title: "click through", action: #selector(toggleClickThrough), keyEquivalent: "")
+		clickThroughItem.state = Settings.main.clickThrough ? .on : .off
+		menu.addItem(clickThroughItem)
 		minuteHandItem = NSMenuItem(title: "minute hand", action: #selector(toggleMinuteHand), keyEquivalent: "")
 		minuteHandItem.state = Settings.main.minuteHand ? .on : .off
 		menu.addItem(minuteHandItem)
@@ -56,14 +61,28 @@ class StatusBarController {
 		menu.addItem(timerItem)
 		menu.addItem(NSMenuItem(title: "quit", action: #selector(NSApplication.terminate(_:)), keyEquivalent: ""))
 		statusItem.menu = menu
-		minuteHandItem.target = self // otherwise they're greyed out
+		clickThroughItem.target = self // otherwise they're greyed out
+		minuteHandItem.target = self
 		dayModeItem.target = self
 		timerItem.target = self
 		
+		setClickThrough()
 		
 		hotKey.keyDownHandler = {
 			self.toggleTimer()
 		}
+	}
+	
+	func setClickThrough() {
+		if let window = NSApplication.shared.windows.first {
+			window.ignoresMouseEvents = Settings.main.clickThrough
+		}
+	}
+	
+	@objc func toggleClickThrough() {
+		Settings.main.clickThrough.toggle()
+		clickThroughItem.state = Settings.main.clickThrough ? .on : .off
+		setClickThrough()
 	}
 	
 	@objc func toggleMinuteHand() {
@@ -87,7 +106,6 @@ class StatusBarController {
 		}
 		timerItem.state = Settings.main.timer ? .on : .off
 	}
-	
 }
 
 class AppDelegate: NSObject, NSApplicationDelegate {

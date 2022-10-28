@@ -73,31 +73,31 @@ struct ContentView: View {
 				Spacer()
 				Circle()
 					.foregroundColor(getColor(time: settings.time, mod: settings.dayMode ? 8 : 4, div: 180))
-					.onTapGesture {
-						if waitForTap() { return }
-						settings.dayMode.toggle()
-						StatusBarController.main.dayModeItem.state = settings.dayMode ? .on : .off
-					}
+//					.onTapGesture {
+//						if waitForTap() { return }
+//						settings.dayMode.toggle()
+//						StatusBarController.main.dayModeItem.state = settings.dayMode ? .on : .off
+//					}
 				Circle()
 					.foregroundColor(getColor(time: settings.time, mod: 6, div: 30))
-					.onTapGesture {
-						if waitForTap() { return }
-						if settings.timer {
-							settings.timer = false
-							settings.lastTime = settings.timerOffset - settings.time
-						} else {
-							// this fails for crazy long timers but alternate solutions suck
-							settings.timerOffset = settings.time + settings.lastTime - 86400
-							settings.timer = true
-						}
-					}
+//					.onTapGesture {
+//						if waitForTap() { return }
+//						if settings.timer {
+//							settings.timer = false
+//							settings.lastTime = settings.timerOffset - settings.time
+//						} else {
+//							// this fails for crazy long timers but alternate solutions suck
+//							settings.timerOffset = settings.time + settings.lastTime - 86400
+//							settings.timer = true
+//						}
+//					}
 				Circle()
 					.foregroundColor(getColor(time: settings.time, mod: 6, div: 5))
-					.onTapGesture {
-						if waitForTap() { return }
-						Settings.main.minuteHand.toggle()
-						StatusBarController.main.minuteHandItem.state = Settings.main.minuteHand ? .on : .off
-					}
+//					.onTapGesture {
+//						if waitForTap() { return }
+//						Settings.main.minuteHand.toggle()
+//						StatusBarController.main.minuteHandItem.state = Settings.main.minuteHand ? .on : .off
+//					}
 				Circle()
 					.foregroundColor(getColor(time: settings.time, mod: 5, div: 1))
 					.frame(width: settings.minuteHand ? nil : 0)
