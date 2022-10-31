@@ -115,12 +115,12 @@ struct ContentView: View {
 	
 	func getColor(time: Int, mod: Int, div: Int) -> Color {
 		[
-			Color(.displayP3, red: 0.6, green: 0.0, blue: 0.0, opacity: 1.0),
+			Color(.displayP3, red: 0.7, green: 0.0, blue: 0.0, opacity: 1.0),
 			Color(.displayP3, red: 1.0, green: 1.0, blue: 0.0, opacity: 1.0),
-			Color(.displayP3, red: 0.0, green: 0.6, blue: 0.0, opacity: 1.0),
-			Color(.displayP3, red: 0.0, green: 1.0, blue: 0.85, opacity: 1.0),
-			Color(.displayP3, red: 0.0, green: 0.0, blue: 1.0, opacity: 1.0),
-			Color(.displayP3, red: 0.9, green: 0.0, blue: 1.0, opacity: 1.0),
+			Color(.displayP3, red: 0.0, green: 0.7, blue: 0.0, opacity: 1.0),
+			Color(.displayP3, red: 0.0, green: 1.0, blue: 0.9, opacity: 1.0),
+			Color(.displayP3, red: 0.05, green: 0.4, blue: 1.0, opacity: 1.0),
+			Color(.displayP3, red: 1.0, green: 0.2, blue: 1.0, opacity: 1.0),
 			Color(.displayP3, red: 1.0, green: 1.0, blue: 1.0, opacity: 1.0),
 			Color(.displayP3, red: 0.0, green: 0.0, blue: 0.0, opacity: 1.0)
 		][(time/div) % mod]
