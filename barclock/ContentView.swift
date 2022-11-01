@@ -8,6 +8,8 @@
 import SwiftUI
 import Combine
 
+let smallSize = 0.25
+
 struct ContentView: View {
 	@State var update: Bool = false
 	@State var tapped: Bool = false
@@ -21,7 +23,7 @@ struct ContentView: View {
 					Circle()
 						.foregroundColor(getColor(time: settings.time - settings.timerOffset + 3, mod: 8, div: 180))
 						.border(.clear)
-						.aspectRatio(contentMode: .fit)
+						.frame(width: settings.size, height: settings.size)
 						.onTapGesture {
 							if waitForTap() { return }
 							if (settings.time - settings.timerOffset)/180 % 8 == 0 && (settings.timerOffset - settings.time) % 180 != 0 {
@@ -30,11 +32,11 @@ struct ContentView: View {
 								settings.timerOffset += 180
 							}
 						}
-					circleStack
+					Spacer().frame(width: settings.size*smallSize)
 					Circle()
 						.foregroundColor(getColor(time: settings.time - settings.timerOffset + 3, mod: 6, div: 30))
 						.border(.clear)
-						.aspectRatio(contentMode: .fit)
+						.frame(width: settings.size, height: settings.size)
 						.onTapGesture {
 							if waitForTap() { return }
 //							if (time - timerOffset)/30 % 6 == 0 {
@@ -43,11 +45,11 @@ struct ContentView: View {
 							settings.timerOffset += 30
 //							}
 						}
-					circleStack
+					Spacer().frame(width: settings.size*smallSize)
 					Circle()
 						.foregroundColor(getColor(time: settings.time - settings.timerOffset + 3, mod: 5, div: 6))
 						.border(.clear)
-						.aspectRatio(contentMode: .fit)
+						.frame(width: settings.size, height: settings.size)
 						.onTapGesture {
 							if waitForTap() { return }
 //							if (time - timerOffset)/5 % 6 == 0 {
@@ -56,12 +58,11 @@ struct ContentView: View {
 							settings.timerOffset += 6
 //							}
 						}
-					circleStack
-						.frame(width: settings.minuteHand ? nil : 0)
+					Spacer().frame(width: settings.minuteHand ? settings.size*smallSize : 0)
 					Circle()
 						.foregroundColor(getColor(time: settings.time - settings.timerOffset + 3, mod: 6, div: 1))
 						.border(.clear)
-						.frame(width: settings.minuteHand ? nil : 0)
+						.frame(width: settings.minuteHand ? settings.size : 0, height: settings.minuteHand ? settings.size : 0)
 						.onTapGesture {
 							if waitForTap() { return }
 //							if (time - timerOffset) % 5 == 0 {
@@ -72,24 +73,25 @@ struct ContentView: View {
 						}
 					Spacer()
 				}
+				Spacer().frame(height: settings.size*smallSize)
 			} else {
-				Circle().fill(.clear)
+//				Spacer().frame(height: settings.size)
 			}
-			Spacer().frame(height: 4)
+//			Spacer().frame(height: settings.size*smallSize)
 			HStack(spacing: 0) {
 				Spacer()
 				Circle()
 					.foregroundColor(getColor(time: settings.time, mod: settings.dayMode ? 8 : 4, div: 180))
-					.aspectRatio(contentMode: .fit)
+					.frame(width: settings.size, height: settings.size)
 //					.onTapGesture {
 //						if waitForTap() { return }
 //						settings.dayMode.toggle()
 //						StatusBarController.main.dayModeItem.state = settings.dayMode ? .on : .off
 //					}
-				circleStack
+				Spacer().frame(width: settings.size*smallSize)
 				Circle()
 					.foregroundColor(getColor(time: settings.time, mod: 6, div: 30))
-					.aspectRatio(contentMode: .fit)
+					.frame(width: settings.size, height: settings.size)
 //					.onTapGesture {
 //						if waitForTap() { return }
 //						if settings.timer {
@@ -101,24 +103,22 @@ struct ContentView: View {
 //							settings.timer = true
 //						}
 //					}
-				circleStack
+				Spacer().frame(width: settings.size*smallSize)
 				Circle()
 					.foregroundColor(getColor(time: settings.time, mod: 6, div: 5))
-					.aspectRatio(contentMode: .fit)
+					.frame(width: settings.size, height: settings.size)
 //					.onTapGesture {
 //						if waitForTap() { return }
 //						Settings.main.minuteHand.toggle()
 //						StatusBarController.main.minuteHandItem.state = Settings.main.minuteHand ? .on : .off
 //					}
-				circleStack
-					.frame(width: settings.minuteHand ? nil : 0)
+//
+				Spacer().frame(width: settings.minuteHand ? settings.size*smallSize : 0)
 				Circle()
 					.foregroundColor(getColor(time: settings.time, mod: 5, div: 1))
-					.aspectRatio(contentMode: .fit)
-					.frame(width: settings.minuteHand ? nil : 0)
+					.frame(width: settings.minuteHand ? settings.size : 0, height: settings.minuteHand ? settings.size : 0)
 				Spacer()
 			}
-			.frame(minHeight: 3)
 		}
 		.onAppear {
 			getTime()
@@ -133,7 +133,7 @@ struct ContentView: View {
 			Color(.displayP3, red: 0.7, green: 0.0, blue: 0.0, opacity: 1.0),
 			Color(.displayP3, red: 1.0, green: 1.0, blue: 0.0, opacity: 1.0),
 			Color(.displayP3, red: 0.0, green: 0.7, blue: 0.0, opacity: 1.0),
-			Color(.displayP3, red: 0.0, green: 0.95, blue: 0.9, opacity: 1.0),
+			Color(.displayP3, red: 0.0, green: 0.7, blue: 0.7, opacity: 1.0), // vera 0 .9 .85
 			Color(.displayP3, red: 0.05, green: 0.4, blue: 1.0, opacity: 1.0),
 			Color(.displayP3, red: 1.0, green: 0.2, blue: 1.0, opacity: 1.0),
 			Color(.displayP3, red: 1.0, green: 1.0, blue: 1.0, opacity: 1.0),
@@ -159,16 +159,6 @@ struct ContentView: View {
 		})
 		
 		return false
-	}
-	
-	var circleStack: some View {
-		VStack(spacing: 0) {
-			Circle().foregroundColor(.clear)
-			Circle().foregroundColor(.clear)
-			Circle().foregroundColor(.clear)
-			Circle().foregroundColor(.clear)
-		}
-		.aspectRatio(contentMode: .fit)
 	}
 }
 

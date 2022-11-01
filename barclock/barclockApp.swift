@@ -15,8 +15,16 @@ struct barclockApp: App {
 	
     var body: some Scene {
         WindowGroup {
-            ContentView()
-				.edgesIgnoringSafeArea(.all)
+			GeometryReader { geometry in
+				ContentView()
+					.edgesIgnoringSafeArea(.all)
+					.onChange(of: geometry.size) { newSize in
+						let widthSize = (newSize.width - 9)/(settings.minuteHand ? (4 + smallSize*3) : (3 + smallSize*2))
+						let heightSize = settings.timer ? newSize.height/(2 + smallSize) : newSize.height
+						let minSize = 6.0
+						settings.size = max(minSize, min(widthSize, heightSize))
+					}
+			}
 		}//.windowStyle(.hiddenTitleBar)
     }
 }
@@ -32,7 +40,7 @@ class StatusBarController {
 	var minuteHandItem: NSMenuItem
 	var dayModeItem: NSMenuItem
 	var timerItem: NSMenuItem
-	let hotKey = HotKey(key: .t, modifiers: [.command, .option])
+//	let hotKey = HotKey(key: .t, modifiers: [.command, .option])
 	
 	init() {
 		statusBar = NSStatusBar.init()
@@ -68,9 +76,9 @@ class StatusBarController {
 		
 		setClickThrough()
 		
-		hotKey.keyDownHandler = {
-			self.toggleTimer()
-		}
+//		hotKey.keyDownHandler = {
+//			self.toggleTimer()
+//		}
 	}
 	
 	func setClickThrough() {

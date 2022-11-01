@@ -18,4 +18,5 @@ class Settings: ObservableObject {
 	@Published var time: Int = 0
 	@Published var lastTime: Int = 0
 	@Published var timerOffset = 0
+	@Published var size: Double = 100
 }
